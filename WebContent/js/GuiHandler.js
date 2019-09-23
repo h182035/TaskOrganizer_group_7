@@ -60,8 +60,14 @@ class GuiHandler{
 	}
 	updateTask(task){
 		console.log('Prøver å oppdatere')
-		const taskId = task.id
-		console.log(document.getElementsByTagName('tr')[0].getAttribute("id"))
+		console.log('id' + task.id)
+		const node = document.getElementById(task.id)
+		if(task.title != null){
+			node.getElementsByTagName('td')[0].innerHTML = task.title
+		}
+		if(task.status != null){
+			node.getElementsByTagName('td')[1].innerHTML = task.status
+		}
 	}
 	removeTask(id){
 		
@@ -84,6 +90,6 @@ gui.allstatuses = statuses
 tasks.forEach((task) => {gui.showTask(task)})
 
 
-gui.updateTask(task[1])
+gui.updateTask({"id":1,"status":"ACTIVE"})
 
 }
