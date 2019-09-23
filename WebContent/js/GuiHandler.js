@@ -58,8 +58,10 @@ class GuiHandler{
 			tasksDiv.getElementsByTagName('tbody')[0].appendChild(nyTask)
 		}
 	}
-	update(task){
-		
+	updateTask(task){
+		console.log('Prøver å oppdatere')
+		const taskId = task.id
+		console.log(document.getElementsByTagName('tr')[0].getAttribute("id"))
 	}
 	removeTask(id){
 		
@@ -82,6 +84,6 @@ gui.allstatuses = statuses
 tasks.forEach((task) => {gui.showTask(task)})
 
 
-
+gui.updateTask(task[1])
 
 }
