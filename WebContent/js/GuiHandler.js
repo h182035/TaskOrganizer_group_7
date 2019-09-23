@@ -94,6 +94,12 @@ class GuiHandler{
 	      }
 	    }
 	noTask(){
+		console.log('leter etter task')
+		let task = document.getElementById(id)
+		if(task == null){
+			GuiHandler() == null
+			console.log('GuiHandler har ingen tasks')
+		}
 		
 	}
 }
