@@ -62,7 +62,9 @@ class GuiHandler{
 		const select = document.getElementById(task.id).getElementsByTagName('select')[0]
 		console.log(select)
 		select.addEventListener('change', function(){
-			gui.updateTask(task)
+			if(confirm('Change status of ' + task.title + '?')){
+				gui.updateTask(task)
+			}
 		})
 		this.disableOption(task)
 	}
