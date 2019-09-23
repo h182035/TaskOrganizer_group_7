@@ -27,11 +27,8 @@ class GuiHandler{
 		const tasksDiv = document.getElementById('tasks')
 		let stringOptions
 		for(status in this.allstatuses){
-			if(task.status == this.allstatuses[status]){
-				stringOptions += "<option value=\"" + this.allstatuses[status] +"\" disabled>" + this.allstatuses[status] + "</option>"
-			}else{
-				stringOptions += "<option value=\"" + this.allstatuses[status] +"\">" + this.allstatuses[status] + "</option>"
-			}
+			stringOptions += "<option value=\"" + this.allstatuses[status] +"\">" + this.allstatuses[status] + "</option>"
+			
 			
         }
 		if(tasksDiv.getElementsByTagName('table').length == 0){
@@ -67,8 +64,20 @@ class GuiHandler{
 		select.addEventListener('change', function(){
 			gui.updateTask(task)
 		})
-		
+		this.disableOption(task)
 	}
+
+	disableOption(task){
+		const options = document.getElementById(task.id).getElementsByTagName('option')
+		for(let i=0; i < options.length; i++){
+			if(task.status == options[i].value){
+				options[i].disabled = true
+			}else{
+				options[i].disabled = false
+			}
+		}
+	}
+
 	updateTask(task){
 		console.log('Prøver å oppdatere')
 		console.log('id' + task.id)
@@ -83,7 +92,8 @@ class GuiHandler{
 			node.getElementsByTagName('td')[1].innerHTML = status
 		}
 		node.getElementsByTagName('select')[0].selectedIndex = 0
-		
+		task.status = status
+		gui.disableOption(task)
 	}
 	removeTask(id) {
 	      console.log("removeTask executed");
