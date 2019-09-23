@@ -57,6 +57,12 @@ class GuiHandler{
             const list = tasksDiv
 			tasksDiv.getElementsByTagName('tbody')[0].appendChild(nyTask)
 		}
+
+		const select = document.getElementById(task.id).getElementsByTagName('select')[0]
+		console.log(select)
+		select.addEventListener('change', function(){
+			gui.updateTask(task)
+		})
 		
 	}
 	updateTask(task){
@@ -66,10 +72,13 @@ class GuiHandler{
 		if(task.title != null){
 			node.getElementsByTagName('td')[0].innerHTML = task.title
 		}
-		if(task.status != null){
-			node.getElementsByTagName('td')[1].innerHTML = task.status
+		console.log('id er: ' + task.id)
+		const select = document.getElementById(task.id).getElementsByTagName('select')[0]
+		const status = select.options[select.selectedIndex].value 
+		if(status != 0){
+			node.getElementsByTagName('td')[1].innerHTML = status
 		}
-		const select = node.getElementsByTagName('select')[0].getElementsByTagName('option')[0].setAttribute('selected', "")
+		node.getElementsByTagName('select')[0].getElementsByTagName('option')[0].setAttribute('selected', "")
 		
 	}
 	removeTask(id){
@@ -93,6 +102,6 @@ gui.allstatuses = statuses
 tasks.forEach((task) => {gui.showTask(task)})
 
 
-gui.updateTask({"id":1,"status":"ACTIVE"})
+//gui.updateTask({"id":1,"status":"ACTIVE"})
 
 }
