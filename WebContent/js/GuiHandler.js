@@ -57,6 +57,7 @@ class GuiHandler{
             const list = tasksDiv
 			tasksDiv.getElementsByTagName('tbody')[0].appendChild(nyTask)
 		}
+		
 	}
 	updateTask(task){
 		console.log('Prøver å oppdatere')
@@ -68,6 +69,8 @@ class GuiHandler{
 		if(task.status != null){
 			node.getElementsByTagName('td')[1].innerHTML = task.status
 		}
+		const select = node.getElementsByTagName('select')[0].getElementsByTagName('option')[0].setAttribute('selected', "")
+		
 	}
 	removeTask(id){
 		
