@@ -78,7 +78,7 @@ class GuiHandler{
 		if(status != 0){
 			node.getElementsByTagName('td')[1].innerHTML = status
 		}
-		node.getElementsByTagName('select')[0].getElementsByTagName('option')[0].setAttribute('selected', "")
+		node.getElementsByTagName('select')[0].selectedIndex = 0
 		
 	}
 	removeTask(id) {
