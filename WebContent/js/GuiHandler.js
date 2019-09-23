@@ -27,7 +27,11 @@ class GuiHandler{
 		const tasksDiv = document.getElementById('tasks')
 		let stringOptions
 		for(status in this.allstatuses){
-			stringOptions += "<option value=\"" + this.allstatuses[status] +"\">" + this.allstatuses[status] + "</option>"
+			if(task.status == this.allstatuses[status]){
+				stringOptions += "<option value=\"" + this.allstatuses[status] +"\" disabled>" + this.allstatuses[status] + "</option>"
+			}else{
+				stringOptions += "<option value=\"" + this.allstatuses[status] +"\">" + this.allstatuses[status] + "</option>"
+			}
 			
         }
 		if(tasksDiv.getElementsByTagName('table').length == 0){
