@@ -78,7 +78,9 @@ export default class GuiHandler {
       .getElementsByTagName("select")[0];
     console.log(select);
     select.addEventListener("change", () => {
-      this.updateTask(task);
+      if(window.confirm("Change status of " + task.title + "?")){
+    	  this.updateTask(task);
+      }
     });
     this.disableOption(task);
     const btn = document
