@@ -17,7 +17,7 @@ export default class TaskBox {
     input.value = "";
   }
   //method to add task
-  onSubmit(input, select, modal) {
+  onSubmit(input, select, modal, id) {
     //check if input is empty - not allowed
     if (input.value === "") {
       window.alert("Empty title is not allowed!");
@@ -25,11 +25,12 @@ export default class TaskBox {
     }
     //addTaskCallbackOrWhatever(input.value, status.value)
     var title = input.value;
-    var status = select.options[select.selectedIndex].value;
+    var status = select.options[select.selectedIndex].text;
     input.value = "";
     select.value = "waiting";
-    this.closeModal(modal);
-    console.log(title + ", " + status);
+    this.closeModal;
+    const task = { id: id, title: title, status: status };
+    return task;
   }
   openModal(modal) {
     modal.style.display = "block";

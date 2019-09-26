@@ -77,8 +77,8 @@ export default class GuiHandler {
       .getElementById(task.id)
       .getElementsByTagName("select")[0];
     console.log(select);
-    select.addEventListener("change", function() {
-      gui.updateTask(task);
+    select.addEventListener("change", () => {
+      this.updateTask(task);
     });
     this.disableOption(task);
     const btn = document
@@ -119,7 +119,7 @@ export default class GuiHandler {
     }
     node.getElementsByTagName("select")[0].selectedIndex = 0;
     task.status = status;
-    gui.disableOption(task);
+    this.disableOption(task);
   }
   removeTask(id) {
     console.log("removeTask executed");

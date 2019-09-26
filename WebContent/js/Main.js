@@ -1,7 +1,6 @@
 "use strict";
 import TaskBox from "./TaskBox.js";
 import GuiHandler from "./GuiHandler.js";
-
 const gui = new GuiHandler();
 const statuses = ["WAITING", "ACTIVE", "DONE"];
 const tasks = [
@@ -9,6 +8,7 @@ const tasks = [
   { id: 2, title: "Clean floor", status: "DONE" },
   { id: 3, title: "Wash windows", status: "ACTIVE" }
 ];
+let id = 4;
 
 gui.allstatuses = statuses;
 
@@ -47,5 +47,6 @@ clearBtn.addEventListener("click", function() {
 });
 //listen for add task click
 addBtn.addEventListener("click", function() {
-  box.onSubmit(input, select, modal);
+  gui.showTask(box.onSubmit(input, select, modal, id));
+  id++;
 });
