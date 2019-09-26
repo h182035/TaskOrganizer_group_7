@@ -8,6 +8,7 @@ export default class TaskBox {
   set allstatuses(values) {
     this._allstatuses = values;
   }
+  set onSubmit(task) {}
   //function to close modal
   closeModal(modal) {
     modal.style.display = "none";
