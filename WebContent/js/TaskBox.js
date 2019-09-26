@@ -28,7 +28,7 @@ export default class TaskBox {
     var status = select.options[select.selectedIndex].text;
     input.value = "";
     select.value = "waiting";
-    this.closeModal;
+    this.closeModal(modal);
     const task = { id: id, title: title, status: status };
     return task;
   }
