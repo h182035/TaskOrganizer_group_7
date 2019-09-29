@@ -6,15 +6,24 @@
 
 export default class GuiHandler {
   constructor(allstatuses) {
-    this.allstatuses = allstatuses;
+    //this.allstatuses = allstatuses;
     // this.deleteTaskCallback = deleteTaskCallBack
     // this.newStatusCallback = newStatusCallback
   }
   set allstatuses(allstatuses) {
     this._allstatuses = allstatuses;
+    allstatuses.forEach(element => {
+      this.fillStatuses(element);
+    });
   }
-  set deleteTaskCall(task) {}
-  set deleteTaskCall(task) {}
+  set tasks(tasks) {
+    this._tasks = tasks;
+  }
+  get tasks() {
+    return this._tasks;
+  }
+  set deleteTaskCall(task) { }
+  set deleteTaskCall(task) { }
   get allstatuses() {
     return this._allstatuses;
   }
@@ -130,11 +139,14 @@ export default class GuiHandler {
     }
   }
   noTask() {
-    console.log("leter etter task");
-    let task = document.getElementById(id);
-    if (task == null) {
-      GuiHandler() == null;
-      console.log("GuiHandler har ingen tasks");
-    }
+    this.tasks = null;
+    console.log("GuiHandler har ingen tasks");
+  }
+
+  fillStatuses(status) {
+    let select = document.getElementById("status");
+    var newEl = document.createElement('option');
+    newEl.innerHTML = status;
+    select.appendChild(newEl);
   }
 }

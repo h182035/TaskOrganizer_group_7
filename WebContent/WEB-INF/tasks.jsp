@@ -22,9 +22,6 @@
 				<tr>
 					<th>Status:</th>
 					<td><select id="status">
-							<option value="waiting">WAITING</option>
-							<option value="active">ACTIVE</option>
-							<option value="done">DONE</option>
 					</select></td>
 				</tr>
 			</table>
@@ -37,7 +34,7 @@
 	<div id="message">
 		<p>Waiting for server data.</p>
 	</div>
-	<button id="modalBtn" class="button">New Task</button>
+	<button id="modalBtn" class="button" disabled>New Task</button>
 	<div id="tasks"></div>
 </body>
 </html>
