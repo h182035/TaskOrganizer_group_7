@@ -5,10 +5,8 @@
 "use strict";
 
 export default class GuiHandler {
-  constructor(allstatuses) {
-    //this.allstatuses = allstatuses;
-    // this.deleteTaskCallback = deleteTaskCallBack
-    // this.newStatusCallback = newStatusCallback
+  constructor() {
+    this.callBack = function() {};
   }
   set allstatuses(allstatuses) {
     this._allstatuses = allstatuses;
@@ -22,8 +20,9 @@ export default class GuiHandler {
   get tasks() {
     return this._tasks;
   }
-  set deleteTaskCall(task) { }
-  set deleteTaskCall(task) { }
+  set deleteTaskCall(callback) {
+    this._callback = callback;
+  }
   get allstatuses() {
     return this._allstatuses;
   }
@@ -90,12 +89,12 @@ export default class GuiHandler {
       this.updateTask(task);
     });
     this.disableOption(task);
-    const btn = document
+    document
       .getElementById(task.id)
       .getElementsByTagName("button")[0]
       .addEventListener("click", () => {
         if (window.confirm("Delete task '" + task.title + "'?")) {
-          this.removeTask(task.id);
+          this.callBack(task.id);
         }
       });
   }
@@ -145,7 +144,7 @@ export default class GuiHandler {
 
   fillStatuses(status) {
     let select = document.getElementById("status");
-    var newEl = document.createElement('option');
+    var newEl = document.createElement("option");
     newEl.innerHTML = status;
     select.appendChild(newEl);
   }

@@ -27,7 +27,7 @@
 			</table>
 
 			<br />
-			<button id="addBtn" class="button">Add Task</button>
+			<button id="addBtn" type ="submit" class="button">Add Task</button>
 		</div>
 	</div>
 
