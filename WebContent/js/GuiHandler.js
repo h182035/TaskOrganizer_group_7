@@ -5,9 +5,7 @@
 "use strict";
 
 export default class GuiHandler {
-  constructor() {
-    this.callBack = function() {};
-  }
+  constructor() {}
   set allstatuses(allstatuses) {
     this._allstatuses = allstatuses;
     allstatuses.forEach(element => {
@@ -20,8 +18,11 @@ export default class GuiHandler {
   get tasks() {
     return this._tasks;
   }
-  set deleteTaskCall(callback) {
-    this._callback = callback;
+  set newStatusCallback(callback) {
+    this.status_callback = callback;
+  }
+  set deleteTaskCallback(callback) {
+    this.delete_callback = callback;
   }
   get allstatuses() {
     return this._allstatuses;
@@ -84,9 +85,8 @@ export default class GuiHandler {
     const select = document
       .getElementById(task.id)
       .getElementsByTagName("select")[0];
-    console.log(select);
     select.addEventListener("change", () => {
-      this.updateTask(task);
+      this.status_callback(task.id, select.value);
     });
     this.disableOption(task);
     document
@@ -94,7 +94,7 @@ export default class GuiHandler {
       .getElementsByTagName("button")[0]
       .addEventListener("click", () => {
         if (window.confirm("Delete task '" + task.title + "'?")) {
-          this.callBack(task.id);
+          this.delete_callback(task.id);
         }
       });
   }
@@ -112,7 +112,6 @@ export default class GuiHandler {
   }
   updateTask(task) {
     console.log("Prøver å oppdatere");
-    console.log("id" + task.id);
     const node = document.getElementById(task.id);
     if (task.title != null) {
       node.getElementsByTagName("td")[0].innerHTML = task.title;
@@ -145,6 +144,7 @@ export default class GuiHandler {
   fillStatuses(status) {
     let select = document.getElementById("status");
     var newEl = document.createElement("option");
+    newEl.setAttribute("value", status);
     newEl.innerHTML = status;
     select.appendChild(newEl);
   }

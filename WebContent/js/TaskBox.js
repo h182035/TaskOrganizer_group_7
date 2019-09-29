@@ -9,6 +9,10 @@ export default class TaskBox {
     this._allstatuses = values;
   }
 
+  set onSubmit(callback) {
+    this._onSubmit = callback;
+  }
+
   //function to close modal
   closeModal(modal) {
     modal.style.display = "none";
@@ -18,7 +22,7 @@ export default class TaskBox {
     input.value = "";
   }
   //method to add task
-  createTask(input, select, modal) {
+  createTask(input, select) {
     if (input.value === "") {
       window.alert("Empty title is not allowed!");
       return;
@@ -26,7 +30,7 @@ export default class TaskBox {
     var taskTitle = input.value;
     var taskStatus = select.options[select.selectedIndex].text;
     input.value = "";
-    select.value = "waiting";
+    select.value = "WAITING";
     const task = { title: taskTitle, status: taskStatus };
     return task;
   }

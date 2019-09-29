@@ -19,8 +19,65 @@ var input = document.getElementById("input");
 // get status
 var select = document.getElementById("status");
 
+var message = document.getElementById("message");
+let count = 0;
+
 const box = new TaskBox();
 // listen for new task click
+async function deleteTaskFromServer(id) {
+  const deleteTaskFromServerUrl = "../TaskServices/broker/task/" + id;
+  try {
+    const response = await fetch(deleteTaskFromServerUrl, {
+      method: "DELETE"
+    });
+    try {
+      var deleteResponse = await response.json();
+      if (deleteResponse.responseStatus) {
+        count--;
+        message.innerHTML = "<p> Found " + count + " tasks </p>";
+        gui.removeTask(id);
+      } else {
+        console.log("Couldn't delete task from server");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function modifyStatusOnServer(taskId, taskStatus) {
+  const modifyStatusOnServerUrl = "../TaskServices/broker/task/" + taskId;
+  console.log(taskStatus);
+  try {
+    const response = await fetch(modifyStatusOnServerUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({ status: taskStatus })
+    });
+    try {
+      const modifyResponse = await response.json();
+      if (modifyResponse.responseStatus) {
+        let task = { id: taskId, status: taskStatus };
+        gui.updateTask(task);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+gui.deleteTaskCallback = id => {
+  deleteTaskFromServer(id);
+};
+gui.newStatusCallback = (id, status) => {
+  modifyStatusOnServer(id, status);
+};
+
+box.onSubmit = task => {
+  addTaskToServer(task.title, task.status);
+};
 
 async function getStatusesFromServer() {
   let getStatusesUrl = "../TaskServices/broker/allstatuses";
@@ -29,8 +86,6 @@ async function getStatusesFromServer() {
     try {
       var statusData = await response.json();
       if (statusData.responseStatus) {
-        console.log(statusData);
-        console.log("i is of run");
         let allstatuses = statusData.allstatuses;
         gui.allstatuses = allstatuses;
         box.allstatuses = allstatuses;
@@ -53,10 +108,9 @@ async function getTasksFromServer() {
     try {
       var taskData = await response.json();
       if (taskData.responseStatus) {
-        console.log("i is of also run");
         let tasks = taskData.tasks;
-        let message = document.getElementById("message");
-        message.innerHTML = "<p> Found " + tasks.length + " tasks </p>";
+        count = tasks.length;
+        message.innerHTML = "<p> Found " + count + " tasks </p>";
         if (tasks.length === 0) {
           gui.noTask();
         } else {
@@ -92,7 +146,7 @@ clearBtn.addEventListener("click", function() {
 addBtn.addEventListener("click", () => {
   let newTask = box.createTask(input, select, modal);
   if (newTask != null) {
-    addTaskToServer(newTask.title, newTask.status);
+    box._onSubmit(newTask);
   }
 });
 
@@ -107,18 +161,15 @@ async function addTaskToServer(taskTitle, taskStatus) {
     try {
       var taskResponse = await response.json();
       if (taskResponse.responseStatus) {
-        let task = {
+        count++;
+        message.innerHTML = "<p> Found " + count + " tasks </p>";
+        let newTask = {
           id: taskResponse.task.id,
           title: taskResponse.task.title,
           status: taskResponse.task.status
         };
-        () => {
-          console.log(
-            `New task '${task.title}' with initial status ${task.status} is added by the user.`
-          );
-          gui.showTask(task);
-          taskbox.close();
-        };
+        gui.showTask(newTask);
+        box.closeModal(modal);
       } else {
         console.log("Task could not be added to server");
       }
@@ -128,52 +179,4 @@ async function addTaskToServer(taskTitle, taskStatus) {
   } catch (error) {
     console.log(error);
   }
-
-  async function deleteTaskFromServer(id) {
-    const deleteTaskFromServerUrl = "../TaskServices/broker/task/" + id;
-    try {
-      const response = await fetch(deleteTaskFromServerUrl, {
-        method: "DELETE"
-      });
-      try {
-        var deleteResponse = await response.json();
-        if (deleteResponse.responseStatus) {
-          gui.removeTask(id);
-        } else {
-          console.log("Couldn't delete task from server");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  gui.deleteTaskCall = id => {
-    deleteTaskFromServer(id);
-  };
-
-  async function modifyStatusOnServer(status) {
-    const modifyStatusOnServerUrl = "../TaskServices/broker/task/2";
-    try {
-      const response = await fetch(modifyStatusOnServerUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify({ status: status })
-      });
-      try {
-        const modifyResponse = await response.json();
-        if (modifyResponse.responseStatus) {
-          //modify it with callback
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  main();
 }
