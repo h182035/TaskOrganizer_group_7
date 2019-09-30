@@ -86,7 +86,9 @@ export default class GuiHandler {
       .getElementById(task.id)
       .getElementsByTagName("select")[0];
     select.addEventListener("change", () => {
+
       this.status_callback(task.id, select.value);
+
     });
     this.disableOption(task);
     document
