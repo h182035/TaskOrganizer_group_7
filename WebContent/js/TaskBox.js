@@ -14,12 +14,14 @@ export default class TaskBox {
   }
 
   //function to close modal
-  closeModal(modal) {
+  closeModal(modal, input, select) {
     modal.style.display = "none";
+    this.clearinput();
   }
   //method to clear input
-  clearinput(input) {
-    input.value = "";
+  clearinput(input, select) {
+    document.getElementById("input").value = "";
+    document.getElementById("status").value = "WAITING";
   }
   //method to add task
   createTask(input, select) {
@@ -29,8 +31,6 @@ export default class TaskBox {
     }
     var taskTitle = input.value;
     var taskStatus = select.options[select.selectedIndex].text;
-    input.value = "";
-    select.value = "WAITING";
     const task = { title: taskTitle, status: taskStatus };
     return task;
   }
