@@ -5,7 +5,7 @@
 "use strict";
 
 export default class GuiHandler {
-  constructor() {}
+  constructor() { }
   set allstatuses(allstatuses) {
     this._allstatuses = allstatuses;
     allstatuses.forEach(element => {
@@ -86,8 +86,9 @@ export default class GuiHandler {
       .getElementById(task.id)
       .getElementsByTagName("select")[0];
     select.addEventListener("change", () => {
-
-      this.status_callback(task.id, select.value);
+      if (window.confirm("Change status from '" + task.status + " to '" + select.value + "?")) {
+        this.status_callback(task.id, select.value);
+      }
 
     });
     this.disableOption(task);
