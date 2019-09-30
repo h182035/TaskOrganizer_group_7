@@ -132,11 +132,9 @@ export default class GuiHandler {
     this.disableOption(task);
   }
   removeTask(id) {
-    console.log("removeTask executed");
     let task = document.getElementById(id);
     if (task != null) {
       task.parentElement.removeChild(task);
-      console.log("removeChild executed");
     }
   }
   noTask() {

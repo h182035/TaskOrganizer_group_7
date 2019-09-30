@@ -2,13 +2,15 @@
 export default class DatabaseHandler {
     constructor() {
         this.count = 0;
+        this.message = document.getElementById("message");
+
     }
     async getStatusesFromServer(guiHandler, taskBox) {
         let getStatusesUrl = "../TaskServices/broker/allstatuses";
         try {
             const response = await fetch(getStatusesUrl, { method: "GET" });
             try {
-                var statusData = await response.json();
+                const statusData = await response.json();
                 if (statusData.responseStatus) {
                     let allstatuses = statusData.allstatuses;
                     guiHandler.allstatuses = allstatuses;
@@ -47,16 +49,16 @@ export default class DatabaseHandler {
         }
     }
 
-    async getTasksFromServer(guiHandler, modalBtn, message) {
+    async getTasksFromServer(guiHandler) {
         const getTasksUrl = "../TaskServices/broker/tasklist";
         try {
             const response = await fetch(getTasksUrl, { method: "GET" });
             try {
-                var taskData = await response.json();
+                const taskData = await response.json();
                 if (taskData.responseStatus) {
                     let tasks = taskData.tasks;
                     this.count = tasks.length;
-                    message.innerHTML = "<p> Found " + this.count + " tasks </p>";
+                    this.message.innerHTML = "<p> Found " + this.count + " tasks </p>";
                     if (tasks.length === 0) {
                         guiHandler.noTask();
                     } else {
@@ -64,7 +66,7 @@ export default class DatabaseHandler {
                             guiHandler.showTask(task);
                         });
                     }
-                    modalBtn.disabled = false;
+                    document.getElementById("modalBtn").disabled = false;
                 } else {
                     console.log("Couldn't retrieve data");
                 }
@@ -82,10 +84,10 @@ export default class DatabaseHandler {
                 method: "DELETE"
             });
             try {
-                var deleteResponse = await response.json();
+                const deleteResponse = await response.json();
                 if (deleteResponse.responseStatus) {
                     this.count--;
-                    message.innerHTML = "<p> Found " + this.count + " tasks </p>";
+                    this.message.innerHTML = "<p> Found " + this.count + " tasks </p>";
                     guiHandler.removeTask(id);
                 } else {
                     console.log("Couldn't delete task from server");
@@ -106,10 +108,10 @@ export default class DatabaseHandler {
                 body: JSON.stringify({ title: taskTitle, status: taskStatus })
             });
             try {
-                var taskResponse = await response.json();
+                const taskResponse = await response.json();
                 if (taskResponse.responseStatus) {
                     this.count++;
-                    message.innerHTML = "<p> Found " + this.count + " tasks </p>";
+                    this.message.innerHTML = "<p> Found " + this.count + " tasks </p>";
                     let newTask = {
                         id: taskResponse.task.id,
                         title: taskResponse.task.title,
