@@ -117,7 +117,7 @@ export default class GuiHandler {
     console.log("Prøver å oppdatere");
     const node = document.getElementById(task.id);
     if (task.title != null) {
-      node.getElementsByTagName("td")[0].innerHTML = task.title;
+      node.getElementsByTagName("td")[0].firstChild.data = task.title;
     }
     console.log("id er: " + task.id);
     const select = document
@@ -125,7 +125,7 @@ export default class GuiHandler {
       .getElementsByTagName("select")[0];
     const status = select.options[select.selectedIndex].value;
     if (status != 0) {
-      node.getElementsByTagName("td")[1].innerHTML = status;
+      node.getElementsByTagName("td")[1].firstChild.data = status;
     }
     node.getElementsByTagName("select")[0].selectedIndex = 0;
     task.status = status;
