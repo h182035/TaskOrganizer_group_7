@@ -146,7 +146,7 @@ export default class GuiHandler {
     let select = document.getElementById("status");
     var newEl = document.createElement("option");
     newEl.setAttribute("value", status);
-    newEl.innerHTML = status;
+    newEl.appendChild(document.createTextNode(status));
     select.appendChild(newEl);
   }
 }

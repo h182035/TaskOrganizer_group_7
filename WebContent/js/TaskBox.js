@@ -2,6 +2,7 @@
 
 export default class TaskBox {
   constructor(allstatuses) {
+    this.initTaskBox();
     this.allstatuses = allstatuses;
   }
 
@@ -37,4 +38,32 @@ export default class TaskBox {
   openModal(modal) {
     modal.style.display = "block";
   }
+  initTaskBox() {
+    let closeBtn = document.getElementById("closeBtn");
+    let modalBtn = document.getElementById("modalBtn");
+    let clearBtn = document.getElementById("clearBtn");
+    let addBtn = document.getElementById("addBtn");
+    let input = document.getElementById("input");
+    let select = document.getElementById("status");
+    let modal = document.getElementById("simpleModal");
+
+    modalBtn.addEventListener("click", () => {
+      this.openModal(modal);
+    });
+    // listen for close modal click
+    closeBtn.addEventListener("click", () => {
+      this.closeModal(modal);
+    });
+    // listen for clear text click
+    clearBtn.addEventListener("click", () => {
+      this.clearinput(input);
+    });
+    // listen for add task click
+    addBtn.addEventListener("click", () => {
+      let newTask = this.createTask(input, select, modalBtn);
+      if (newTask != null) {
+        this._onSubmit(newTask);
+      }
+    });
+}
 }
