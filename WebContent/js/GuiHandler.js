@@ -78,8 +78,9 @@ export default class GuiHandler {
         "</select>" +
         "</td>" +
         '<td><button type="button">Remove</button></td>';
-      const list = tasksDiv;
-      tasksDiv.getElementsByTagName("tbody")[0].appendChild(nyTask);
+      const list = tasksDiv.getElementsByTagName('tbody')[0];
+      list.insertBefore(nyTask, list.childNodes[0])
+
     }
 
     const select = document
