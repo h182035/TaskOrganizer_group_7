@@ -35,12 +35,12 @@ export default class GuiHandler {
     const option1 = document.createElement('option')
     option1.setAttribute('value', '0')
     option1.setAttribute('selected', '')
-    option1.innerHTML = '&lt;Modify&gt;'
+    option1.appendChild(document.createTextNode('<Modify>'))
     selectElement.appendChild(option1)
     for (status in this.allstatuses) {
       let option2 = document.createElement('option')
       option2.setAttribute('value', this.allstatuses[status])
-      option2.innerHTML = this.allstatuses[status]
+      option2.appendChild(document.createTextNode(this.allstatuses[status]))
       selectElement.appendChild(option2)
     }
 
@@ -62,10 +62,10 @@ export default class GuiHandler {
         const td5 = document.createElement('td')
         const button = document.createElement('button')
         button.setAttribute('type', 'button')
-        button.innerHTML = 'Remove'
+        button.appendChild(document.createTextNode('Remove'))
 
-        th1.innerHTML = 'Task'
-        th2.innerHTML = 'Status'
+        th1.appendChild (document.createTextNode('Task'));
+        th2.appendChild (document.createTextNode('Status'));
         tr.appendChild(th1)
         tr.appendChild(th2)
         thead.appendChild(tr)
@@ -106,7 +106,7 @@ export default class GuiHandler {
         const tdButton = document.createElement('td')
         const button = document.createElement('button')
         button.setAttribute('type', 'button')
-        button.innerHTML = 'Remove'
+        button.appendChild(document.createTextNode('Remove'))
         tdButton.appendChild(button)
 
         nyTask.appendChild(tdTitle)
